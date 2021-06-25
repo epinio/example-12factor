@@ -1,33 +1,58 @@
-The Twelve-Factor App
-=====================
+# Introduction
 
-Source for the content app running at: https://12factor.net/
+This is a sample 12factor application that can be deployed on Kubernetes using Epinio. The 12factor application is a simple ruby web app with pages which explain about the 12 factors/principles to be followed while developing your cloud-native application. 
 
-Development
------------
+Note: This is the simplest ruby web app with no complexities. For a more complicated ruby app, you can go to [Ruby App](https://github.com/epinio/example-rails)
 
-    bundle install
-    heroku local:start
-    open http://localhost:5000
+# Deploy
 
-Production deploy
------------------
+## Step 1 - Create a cluster
 
-    heroku create
-    git push heroku master
-    heroku open
+```bash
+k3d cluster create epinio -p 80:80@server[0] -p 443:443@server[0] --k3s-server-arg --disable --k3s-server-arg traefik
+```
 
-Meta
-----
+## Step 2 - Download epinio cli
 
-Created by Adam Wiggins
+Find the artifact that matches your OS and architecture by visiting the latest
+release here: https://github.com/epinio/epinio/releases
 
-Contributions from: James Lindenbaum, Mark McGranaghan, Chris Stolt, Ryan
-Daigle, Mark Imbriaco, Keith Rarick, Will Leinweber, Jesper Jørgensen, James
-Ward, Adam Seligman, Phil Hagelberg, Jon Mountjoy, Matthew Turland, Daniel
-Jomphe, Mattt Thompson, Anand Narasimhan, Lucas Fais, Pete Hodgson
+You need to download that binary and put it in your PATH. Something like this
+should work on Linux (replace the link with right one for your binary):
 
-Translations and edits by: [@sigerello](https://github.com/sigerello), [@mahnunchik](https://github.com/mahnunchik), [@francescomalatesta](https://github.com/francescomalatesta), [@astralhpi](https://github.com/astralhpi), [@liangshan](https://github.com/liangshan), [@orangain](https://github.com/orangain), [@Keirua](https://github.com/Keirua), Clément Camin, Bob Marteen, [@dmathieu](https://github.com/dmathieu), [@fernandes](https://github.com/fernandes), [@gwmoura](https://github.com/gwmoura), [@lfilho](https://github.com/lfilho), [@Arturszott](https://github.com/Arturszott), [@melikeyurtoglu](https://github.com/melikeyurtoglu) and [more](https://github.com/heroku/12factor/graphs/contributors).
+```bash
+# Download the binary
+wget https://github.com/epinio/epinio/releases/download/v0.0.16/epinio-linux-amd64
+# Make the binary executable
+chmod +x epinio-linux-amd64
+# Put epinio in your PATH
+mv epinio-linux-amd64 /usr/bin/epinio
+# Enable epinio autocompletion
+epinio comp bash > comp
+source comp
+```
 
-Released under the MIT License:
-https://opensource.org/licenses/MIT
+## Step 3 - Install epinio
+
+```bash
+epinio install
+```
+
+## Step 4 - Clone 12factor repo
+
+```bash
+git clone https://github.com/epinio/example-12factor.git
+cd example-12factor
+```
+
+## Step 5 - Push 12factor app
+
+```bash
+epinio push app1
+```
+
+Note: Don't name your app with as `12factor` as `epinio` doesn't accept app names starting with a numeric.
+
+## Step 6 - Visit website
+
+You will recieve a URL at the end of the `push` process. Use that url to access your 12factor app.
