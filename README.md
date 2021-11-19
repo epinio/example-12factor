@@ -48,7 +48,7 @@ cd example-12factor
 ## Step 5 - Push 12factor app
 
 ```bash
-epinio push app1
+epinio push -n app1
 ```
 
 Note: Don't name your app with as `12factor` as `epinio` doesn't accept app names starting with a numeric.
