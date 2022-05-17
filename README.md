@@ -9,7 +9,7 @@ Note: This is the simplest ruby web app with no complexities. For a more complic
 ## Step 1 - Create a cluster
 
 ```bash
-k3d cluster create epinio -p 80:80@server[0] -p 443:443@server[0] --k3s-server-arg --disable --k3s-server-arg traefik
+bash> k3d cluster create epinio -p 80:80 -p 443:443
 ```
 
 ## Step 2 - Download epinio cli
@@ -22,21 +22,19 @@ should work on Linux (replace the link with right one for your binary):
 
 ```bash
 # Download the binary
-wget https://github.com/epinio/epinio/releases/download/v0.0.16/epinio-linux-amd64
+bash> wget https://github.com/epinio/epinio/releases/download/v0.7.1/epinio-linux-x86_64
 # Make the binary executable
-chmod +x epinio-linux-amd64
+bash> chmod +x epinio-linux-x86_64
 # Put epinio in your PATH
-mv epinio-linux-amd64 /usr/bin/epinio
+bash> mv epinio-linux-x86_64 /usr/bin/epinio
 # Enable epinio autocompletion
-epinio comp bash > comp
-source comp
+bash> epinio completion bash > comp
+bash> source comp
 ```
 
 ## Step 3 - Install epinio
 
-```bash
-epinio install
-```
+Follow the Epinio installation guide [here](https://docs.epinio.io/installation).
 
 ## Step 4 - Clone 12factor repo
 
@@ -48,10 +46,8 @@ cd example-12factor
 ## Step 5 - Push 12factor app
 
 ```bash
-epinio push -n app1
+epinio push -n app1 -e BP_MRI_VERSION=2.7.*
 ```
-
-Note: Don't name your app with as `12factor` as `epinio` doesn't accept app names starting with a numeric.
 
 ## Step 6 - Visit website
 
