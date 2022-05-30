@@ -46,7 +46,7 @@ cd example-12factor
 ## Step 5 - Push 12factor app
 
 ```bash
-epinio push -n app1 -e BP_MRI_VERSION=2.7.*
+epinio push -n app1
 ```
 
 ## Step 6 - Visit website
