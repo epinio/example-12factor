@@ -6,7 +6,9 @@ require 'rack/ssl-enforcer'
 configure do
   use Rack::SslEnforcer if ENV['FORCE_SSL']
   I18n.enforce_available_locales = true
-  I18n.load_path = Dir[File.join(settings.root, 'locales', '*.yml')]
+  I18n.load_path += Dir[File.join(settings.root, 'locales', '*.yml')]
+  # I18n.available_locales = Dir[File.join(settings.root, 'locales', '*.yml')].map { |f| File.basename(f, '.yml').to_sym }
+  # I18n.available_locales = [:en, :pt]
   I18n.backend.load_translations
   I18n.default_locale = :en
 end
