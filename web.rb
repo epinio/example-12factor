@@ -5,7 +5,7 @@ require 'rack/ssl-enforcer'
 
 configure do
   # For Development use only!
-  use Rack::Protection, except: [:host_authorization]
+  disable :protection
   use Rack::SslEnforcer if ENV['FORCE_SSL']
   I18n.enforce_available_locales = true
   I18n.load_path += Dir[File.join(settings.root, 'locales', '*.yml')]
