@@ -3,6 +3,9 @@ require 'maruku'
 require 'i18n'
 require 'rack/ssl-enforcer'
 
+# For Development use only!
+set :protection, except: :host_authorization
+
 configure do
   use Rack::SslEnforcer if ENV['FORCE_SSL']
   I18n.enforce_available_locales = true
